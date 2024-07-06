@@ -1,7 +1,5 @@
 import time
 
-from selenium.webdriver.common.by import By
-
 from pages.main_page import MainPage
 from pages.login_page import LoginPage
 from pages.profile_page import ProfilePage
@@ -33,7 +31,7 @@ def test_choise_1_product(browser,remove_cart):
     cart = CartPage(browser)
     time.sleep(1)
     cart.cart_submit(name_product)
-    time.sleep(1)
+
 
 
 def test_check_2_products(browser,remove_cart):
@@ -61,4 +59,4 @@ def test_check_2_products(browser,remove_cart):
     cart = CartPage(browser)
     time.sleep(1)
     cart.cart_submit(name_product_1,name_product_2)
-    time.sleep(1)
+
