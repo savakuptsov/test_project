@@ -2,6 +2,7 @@ from base.base_class import Base
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from utilites.logger import Logger
 
 
 class ProfilePage(Base):
@@ -40,10 +41,12 @@ class ProfilePage(Base):
     # mehods
 
     def product_selection(self, chapter='Блоки и элементы питания',subsection='Аккумуляторы Li (литиевые)'):
+        Logger.add_start_step(method='product_selection')
         """Метод принимает название раздела и подраздела"""
         self.click_get_catalog_button()
         self.hover_chapter(chapter)
         self.click_subsection(subsection)
+        Logger.add_end_step(url=self.driver.current_url, method='product_selection')
 
 
 

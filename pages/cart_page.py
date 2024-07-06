@@ -3,6 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import selenium.common.exceptions
+from utilites.logger import Logger
 
 
 class CartPage(Base):
@@ -50,6 +51,7 @@ class CartPage(Base):
     # mehods
 
     def cart_submit(self, *args):
+        Logger.add_start_step(method='auth')
         product_texts = self.get_texts_from_elements(self.get_products_locator)
         for arg in args:
             assert arg in product_texts
@@ -57,6 +59,7 @@ class CartPage(Base):
         self.click_get_submit_button()
 
     def clear_cart(self):
+        Logger.add_start_step(method='clear_cart')
         try:
             remove_button = self.find_element_by_text('Удалить выбранные')
             remove_button.click()
@@ -64,3 +67,4 @@ class CartPage(Base):
             print('Корзина очищена')
         except selenium.common.exceptions.TimeoutException:
             print('Корзина пустая, товары не были добавлены')
+        Logger.add_end_step(url=self.driver.current_url, method='clear_cart')

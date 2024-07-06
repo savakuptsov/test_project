@@ -3,7 +3,7 @@ from base.base_class import Base
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-
+from utilites.logger import Logger
 
 class BaseClassForProducts(Base):
 
@@ -49,7 +49,9 @@ class BaseClassForProducts(Base):
 
     # methods
     def add_product_to_cart(self):
+        Logger.add_start_step(method='add_product_to_cart')
         try:
             self.click_add_to_cart_button()
         except selenium.common.exceptions.TimeoutException:
             print('Товар уже в корзине')
+        Logger.add_end_step(url=self.driver.current_url, method='add_product_to_cart')
