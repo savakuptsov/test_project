@@ -56,7 +56,7 @@ class Base():
     def get_screenshot(self):
         now_date = datetime.datetime.now().strftime('%Y.%m.%d.%H.%M.%S')
         name_screenshot = 'screenshot' + now_date + '.png'
-        self.driver.save_screenshot(f'/Users/sava/PycharmProjects/pythonProject8/screen/{name_screenshot}')
+        self.driver.save_screenshot(f'/Users/sava/PycharmProjects/test_project/{name_screenshot}')
 
 
     """Method assert url"""

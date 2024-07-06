@@ -3,6 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from utilites.config import LOGIN,PASSWORD
+from utilites.logger import Logger
 
 
 class LoginPage(Base):
@@ -51,8 +52,10 @@ class LoginPage(Base):
     # methods
 
     def auth(self):
+        Logger.add_start_step(method='auth')
         self.input_email(LOGIN)
         self.input_pass(PASSWORD)
         self.click_login_button()
         self.assert_word(self.get_main_word, 'Личный кабинет')
         self.assert_url('https://www.chipdip.ru/account')
+        Logger.add_end_step(url=self.driver.current_url, method='auth')
