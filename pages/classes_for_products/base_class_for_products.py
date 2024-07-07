@@ -57,21 +57,21 @@ class BaseClassForProducts(Base):
         print('Нажатие добавления товара в корзину')
 
     # methods
-    def add_product_to_cart(self):
+    def add_product_to_cart(self,multiple=False):
+        """Метод для добавления товаров в корзину,
+        параеметр multiple для множественного добавления в корзину"""
         Logger.add_start_step(method='add_product_to_cart')
-        try:
-            self.click_add_to_cart_button()
-        except selenium.common.exceptions.TimeoutException:
-            print('Товар уже в корзине')
-        Logger.add_end_step(url=self.driver.current_url, method='add_product_to_cart')
-
-    def add_some_products_to_cart(self,quantity=1):
-        Logger.add_start_step(method='add_product_to_cart')
-        try:
-            for x in self.get_some_add_to_cart_button:
-                x.click()
-        except selenium.common.exceptions.TimeoutException:
-            print('Товар уже в корзине')
+        if multiple:
+            try:
+                for x in self.get_some_add_to_cart_button:
+                    x.click()
+            except selenium.common.exceptions.TimeoutException:
+                print('Товар уже в корзине')
+        else:
+            try:
+                self.click_add_to_cart_button()
+            except selenium.common.exceptions.TimeoutException:
+                print('Товар уже в корзине')
         Logger.add_end_step(url=self.driver.current_url, method='add_product_to_cart')
 
     def parse_product_names(self):

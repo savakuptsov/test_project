@@ -75,5 +75,6 @@ class Base():
         ActionChains(self.driver).move_to_element(locator).perform()
 
     def get_texts_from_elements(self,elements):
+        """Метод возвращает список текстов атрибутов"""
         k =[x.text for x in elements]
         return k
