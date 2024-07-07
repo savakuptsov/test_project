@@ -51,6 +51,7 @@ class CartPage(Base):
     # mehods
 
     def cart_submit(self, *args):
+        """Метод для проверки корзины и подтверждения"""
         Logger.add_start_step(method='auth')
         product_texts = self.get_texts_from_elements(self.get_products_locator)
         print(product_texts)
@@ -61,6 +62,7 @@ class CartPage(Base):
         self.click_get_submit_button()
 
     def clear_cart(self):
+        """Метод для очистки корзины"""
         Logger.add_start_step(method='clear_cart')
         try:
             remove_button = self.find_element_by_text('Удалить выбранные')

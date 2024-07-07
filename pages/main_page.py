@@ -20,6 +20,7 @@ class MainPage(Base):
 
     # actions
     def click_auth_button(self):
+        """Метод для открытия формы авторизации"""
         Logger.add_start_step(method='click_auth_button')
         self.get_auth_button.click()
         print('Клик по кнопке войти')
