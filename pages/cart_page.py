@@ -53,6 +53,8 @@ class CartPage(Base):
     def cart_submit(self, *args):
         Logger.add_start_step(method='auth')
         product_texts = self.get_texts_from_elements(self.get_products_locator)
+        print(product_texts)
+        print(args)
         for arg in args:
             assert arg in product_texts
         print('Товары есть в корзине')

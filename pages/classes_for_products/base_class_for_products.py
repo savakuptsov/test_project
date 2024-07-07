@@ -16,6 +16,7 @@ class BaseClassForProducts(Base):
     search_button = (By.XPATH, "//button[@class='button button_light mr0']")
     add_to_cart_button = (By.XPATH, "//button[@class='button button_red add2cart']")
     add_to_cart_button_enable = (By.XPATH, "//button[@class='button button_red add2cart button_light']")
+    product_name_locator = (By.XPATH, "//div[@class='item__name']")
 
     # getters
     @property
@@ -33,6 +34,14 @@ class BaseClassForProducts(Base):
     @property
     def get_add_to_cart_button_enable(self):
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.add_to_cart_button_enable))
+
+    @property
+    def get_some_add_to_cart_button(self):
+        return self.driver.find_elements(*self.add_to_cart_button)
+
+    @property
+    def get_some_product_names(self):
+        return self.driver.find_elements(*self.product_name_locator)
 
     # actions
     def input_product(self, product):
@@ -55,3 +64,17 @@ class BaseClassForProducts(Base):
         except selenium.common.exceptions.TimeoutException:
             print('Товар уже в корзине')
         Logger.add_end_step(url=self.driver.current_url, method='add_product_to_cart')
+
+    def add_some_products_to_cart(self,quantity=1):
+        Logger.add_start_step(method='add_product_to_cart')
+        try:
+            for x in self.get_some_add_to_cart_button:
+                x.click()
+        except selenium.common.exceptions.TimeoutException:
+            print('Товар уже в корзине')
+        Logger.add_end_step(url=self.driver.current_url, method='add_product_to_cart')
+
+    def parse_product_names(self):
+        return self.get_texts_from_elements(self.get_some_product_names)
+
+

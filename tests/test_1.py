@@ -33,7 +33,8 @@ def test_choise_1_product(browser,remove_cart):
     cart.cart_submit(name_product)
 
 
-
+"""Выбор двух товаров разных разделов через поиск, 
+добавление его в корзину и переход к оформлению корзины """
 def test_check_2_products(browser,remove_cart):
     browser.get(URL)
 
@@ -60,3 +61,17 @@ def test_check_2_products(browser,remove_cart):
     time.sleep(1)
     cart.cart_submit(name_product_1,name_product_2)
 
+"""Выбор 20 товаров одного подраздела, добавление в корзину и переход к оформлению корзины"""
+def test_check_20_products(browser,remove_cart):
+    browser.get(URL)
+
+    select_products = ProfilePage(browser)
+    select_products.product_selection('Электротехника', 'Герконы')
+    products = BaseClassForProducts(browser)
+    products.add_some_products_to_cart()
+    name_products = products.parse_product_names()
+    products.click_cart_button()
+
+    cart = CartPage(browser)
+    time.sleep(1)
+    cart.cart_submit(*name_products)
