@@ -17,6 +17,7 @@ class LoginPage(Base):
     pass_locator = (By.XPATH, "//input[@name='pwd']")
     login_button_locator = (By.XPATH, "//button[text()='Войти']")
     main_word = (By.XPATH, "//h1[text()='Личный кабинет']")
+    invalid_auth_label = (By.XPATH, "//span[@class='with-icon with-icon_attention_red redtext']")
 
     # getters
     @property
@@ -34,6 +35,10 @@ class LoginPage(Base):
     @property
     def get_main_word(self):
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.main_word))
+
+    @property
+    def get_invalid_auth_label(self):
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.invalid_auth_label))
 
     # actions
 
@@ -56,6 +61,4 @@ class LoginPage(Base):
         self.input_email(email)
         self.input_pass(password)
         self.click_login_button()
-        self.assert_word(self.get_main_word, 'Личный кабинет')
-        self.assert_url('https://www.chipdip.ru/account')
         Logger.add_end_step(url=self.driver.current_url, method='auth')

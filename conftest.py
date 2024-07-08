@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 from base.base_class import Base
 from pages.cart_page import CartPage
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def browser():
     o = Options()
     o.add_experimental_option("detach", True)
