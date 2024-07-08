@@ -1,1 +1,0 @@
-classes_for_product = {'Ребристые радиаторы':'Ribbed_radiators'}

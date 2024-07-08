@@ -14,6 +14,7 @@ class Base():
 
     # base locators
     cart_button = (By.XPATH, "//span[@id='topbox_cart_qty']")
+    profile_button = (By.XPATH, "header__main-link header__main-link-lk hovered-link']")
 
 
     # getters
@@ -21,10 +22,18 @@ class Base():
     def get_cart_button_locator(self):
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.cart_button))
 
+    @property
+    def get_profile_button_locator(self):
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.profile_button))
+
 
     # actions
     def click_cart_button(self):
         self.get_cart_button_locator.click()
+        print('Нажатие кнопки корзины')
+
+    def click_profile_button(self):
+        self.get_profile_button_locator.click()
         print('Нажатие кнопки корзины')
 
         """Метод для поиска элемента по тексту, может работать некорректно в случае,

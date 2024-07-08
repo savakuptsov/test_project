@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from utilites.logger import Logger
 
+
 class BaseClassForProducts(Base):
 
     def __init__(self, driver):
@@ -17,6 +18,7 @@ class BaseClassForProducts(Base):
     add_to_cart_button = (By.XPATH, "//button[@class='button button_red add2cart']")
     add_to_cart_button_enable = (By.XPATH, "//button[@class='button button_red add2cart button_light']")
     product_name_locator = (By.XPATH, "//div[@class='item__name']")
+    quantity_product_increment = (By.XPATH, "//button[@class='input__incrementer']")
 
     # getters
     @property
@@ -43,6 +45,10 @@ class BaseClassForProducts(Base):
     def get_some_product_names(self):
         return self.driver.find_elements(*self.product_name_locator)
 
+    @property
+    def get_quantity_product_increment(self):
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.quantity_product_increment))
+
     # actions
     def input_product(self, product):
         self.get_search_input.send_keys(product)
@@ -56,11 +62,17 @@ class BaseClassForProducts(Base):
         self.get_add_to_cart_button.click()
         print('Нажатие добавления товара в корзину')
 
+    def click_get_quantity_product_increment(self):
+        self.get_quantity_product_increment.click()
+        print('Нажатие добавления товара в корзину')
+
     # methods
-    def add_product_to_cart(self,multiple=False):
+    def add_product_to_cart(self, multiple=False,quantity=1):
         """Метод для добавления товаров в корзину,
         параеметр multiple для множественного добавления в корзину"""
         Logger.add_start_step(method='add_product_to_cart')
+        for x in range(quantity-1):
+            self.click_get_quantity_product_increment()
         if multiple:
             try:
                 for x in self.get_some_add_to_cart_button:
@@ -76,5 +88,3 @@ class BaseClassForProducts(Base):
 
     def parse_product_names(self):
         return self.get_texts_from_elements(self.get_some_product_names)
-
-

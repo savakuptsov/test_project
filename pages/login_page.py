@@ -51,10 +51,10 @@ class LoginPage(Base):
 
     # methods
 
-    def auth(self):
+    def auth(self,email=LOGIN,password=PASSWORD):
         Logger.add_start_step(method='auth')
-        self.input_email(LOGIN)
-        self.input_pass(PASSWORD)
+        self.input_email(email)
+        self.input_pass(password)
         self.click_login_button()
         self.assert_word(self.get_main_word, 'Личный кабинет')
         self.assert_url('https://www.chipdip.ru/account')

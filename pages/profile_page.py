@@ -1,3 +1,5 @@
+import time
+
 from base.base_class import Base
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -10,19 +12,24 @@ class ProfilePage(Base):
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
+
     # locators
-    catalog_button_locator = (By.XPATH,"//button[@id='catalog_button']")
+    catalog_button_locator = (By.XPATH, "//button[@id='catalog_button']")
 
     # getters
     @property
     def get_catalog_button_locator(self):
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.catalog_button_locator))
 
-    def get_catalog_product_locator(self,name):
+    def get_catalog_product_locator(self, name):
         return self.find_element_by_text(name)
 
-    def get_subsection_locator(self,name):
+    def get_subsection_locator(self, name):
         return self.find_element_by_text(name)
+
+    @property
+    def get_exit_locator(self):
+        return self.find_element_by_text('Выход')
 
     # actions
     def click_get_catalog_button(self):
@@ -33,14 +40,17 @@ class ProfilePage(Base):
         self.element_hover(self.get_catalog_product_locator(chapter))
         print('Наведение на раздел')
 
-    def click_subsection(self,locator):
+    def click_subsection(self, locator):
         self.get_subsection_locator(locator).click()
         print('Выбор подраздела')
 
+    def click_exit(self):
+        self.get_exit_locator.click()
+        print('Выход из аккаунта')
 
     # mehods
 
-    def product_selection(self, chapter='Блоки и элементы питания',subsection='Аккумуляторы Li (литиевые)'):
+    def product_selection(self, chapter='Блоки и элементы питания', subsection='Аккумуляторы Li (литиевые)'):
         Logger.add_start_step(method='product_selection')
         """Метод принимает название раздела и подраздела"""
         self.click_get_catalog_button()
@@ -48,5 +58,8 @@ class ProfilePage(Base):
         self.click_subsection(subsection)
         Logger.add_end_step(url=self.driver.current_url, method='product_selection')
 
-
-
+    def log_out(self):
+        Logger.add_start_step(method='product_selection')
+        self.click_exit()
+        self.assert_url('https://www.chipdip.ru/account/logon?ReturnUrl=%2faccount')
+        Logger.add_end_step(url=self.driver.current_url, method='product_selection')

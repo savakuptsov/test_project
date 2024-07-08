@@ -13,10 +13,11 @@ class CartPage(Base):
         self.driver = driver
 
     # locators
-    submit_button_locator = (By.XPATH, "//button[@type='submit']")
+    submit_button_locator = (By.XPATH, "//button[@class='button button_red button_big button_w100 not-print']")
     products_locator = (By.XPATH, '//a[@class="link name"]')
     accept_button_yes = (By.XPATH, "//button[@id='fancyConfirm_ok']")
     accept_button_no = (By.XPATH, "//button[@id='fancyConfirm_cancel']")
+    empty_cart_locator = (By.XPATH, "//div[@id='cart_empty']/h3")
 
     # getters
     @property
@@ -25,6 +26,7 @@ class CartPage(Base):
 
     @property
     def get_products_locator(self):
+        self.driver.implicitly_wait(2)
         return self.driver.find_elements(*self.products_locator)
 
     @property
@@ -35,8 +37,12 @@ class CartPage(Base):
     def get_accept_button_no(self):
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.accept_button_no))
 
+    @property
+    def get_empty_cart_locator(self):
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.empty_cart_locator))
+
     # actions
-    def click_get_submit_button(self):
+    def click_submit_button(self):
         self.get_submit_button_locator.click()
         print('Клик по кнопке подтверждения товаров')
 
@@ -54,12 +60,12 @@ class CartPage(Base):
         """Метод для проверки корзины и подтверждения"""
         Logger.add_start_step(method='auth')
         product_texts = self.get_texts_from_elements(self.get_products_locator)
-        print(product_texts)
-        print(args)
         for arg in args:
             assert arg in product_texts
         print('Товары есть в корзине')
-        self.click_get_submit_button()
+        self.click_submit_button()
+        self.assert_url('https://www.chipdip.ru/order/form?from=cart')
+
 
     def clear_cart(self):
         """Метод для очистки корзины"""
@@ -68,6 +74,7 @@ class CartPage(Base):
             remove_button = self.find_element_by_text('Удалить выбранные')
             remove_button.click()
             self.click_accept_button_yes()
+            self.assert_word(self.get_empty_cart_locator,'Сейчас в корзине нет товаров')
             print('Корзина очищена')
         except selenium.common.exceptions.TimeoutException:
             print('Корзина пустая, товары не были добавлены')
