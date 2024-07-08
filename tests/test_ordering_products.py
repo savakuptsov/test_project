@@ -9,7 +9,7 @@ from utilites.config import URL
 """Выбор товара через поиск, добавление 10 экземпляров в корзину и переход к оформлению корзины """
 
 
-def test_choise_1_product(browser,remove_cart):
+def test_check_1_product(browser, remove_cart):
     browser.get(URL)
     enter = MainPage(browser)
     enter.click_auth_button()
@@ -28,13 +28,14 @@ def test_choise_1_product(browser,remove_cart):
     product.click_cart_button()
 
     cart = CartPage(browser)
-    time.sleep(1)
     cart.cart_submit(name_product)
 
 
 """Выбор двух товаров разных разделов через поиск, 
 добавление его в корзину и переход к оформлению корзины """
-def test_check_2_products(browser,remove_cart):
+
+
+def test_check_2_products(browser, remove_cart):
     browser.get(URL)
 
     select_product_1 = ProfilePage(browser)
@@ -57,11 +58,13 @@ def test_check_2_products(browser,remove_cart):
     product_2.click_cart_button()
 
     cart = CartPage(browser)
-    cart.cart_submit(name_product_1,name_product_2)
+    cart.cart_submit(name_product_1, name_product_2)
 
 
 """Выбор 20 товаров одного подраздела, добавление в корзину и переход к оформлению корзины"""
-def test_check_20_products(browser,remove_cart):
+
+
+def test_check_20_products(browser, remove_cart):
     browser.get(URL)
 
     select_products = ProfilePage(browser)
@@ -72,6 +75,3 @@ def test_check_20_products(browser,remove_cart):
     products.click_cart_button()
     cart = CartPage(browser)
     cart.cart_submit(*name_products)
-
-
-
