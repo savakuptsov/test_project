@@ -33,14 +33,14 @@ class Base():
         self.get_profile_button_locator.click()
         print('Нажатие кнопки корзины')
 
-    #methods
+    # methods
     def find_element_by_text(self, name_text_element):
         """Метод для поиска элемента по тексту, может работать некорректно в случае,
          если на странице несколько элементов с одним названием"""
         self.locator = f"//*[text()='{name_text_element}']"
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.locator)))
 
-    def get_current_url(self):
+    def print_current_url(self):
         """Метод для печати текущего url"""
         get_url = self.driver.current_url
         print("current url:" + get_url)
@@ -51,16 +51,16 @@ class Base():
         assert value_word == result
         print("Переход на страницу совершен")
 
-    def get_screenshot(self):
+    def save_screenshot(self):
         """Метод для создания скришотов"""
         now_date = datetime.datetime.now().strftime('%Y.%m.%d.%H.%M.%S')
         name_screenshot = 'screenshot' + now_date + '.png'
-        self.driver.save_screenshot(f'/Users/sava/PycharmProjects/test_project/{name_screenshot}')
+        self.driver.save_screenshot(f'screenshots/{name_screenshot}')
 
     def assert_url(self, url_result):
         """Метод для проверки url"""
-        get_url = self.driver.current_url
-        assert get_url == url_result
+        url = self.driver.current_url
+        assert url == url_result
         print('url проверен')
 
     def element_hover(self, locator):
