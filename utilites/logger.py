@@ -2,7 +2,7 @@ import datetime
 import os
 
 
-class Logger():
+class Logger:
     file_name = "logs/" + str(datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")) + ".log"
 
     @classmethod
