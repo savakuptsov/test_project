@@ -6,23 +6,23 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
-class Base():
+class Base:
+    # base locators
+    CART_BUTTON = (By.XPATH, "//span[@id='topbox_cart_qty']")
+    PROFILE_BUTTON = (By.XPATH, "header__main-link header__main-link-lk hovered-link']")
+
     def __init__(self, driver):
         self.locator = None
         self.driver = driver
 
-    # base locators
-    cart_button = (By.XPATH, "//span[@id='topbox_cart_qty']")
-    profile_button = (By.XPATH, "header__main-link header__main-link-lk hovered-link']")
-
     # getters
     @property
     def get_cart_button_locator(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.cart_button))
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.CART_BUTTON))
 
     @property
     def get_profile_button_locator(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.profile_button))
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.PROFILE_BUTTON))
 
     # actions
     def click_cart_button(self):

@@ -6,48 +6,43 @@ from selenium.webdriver.common.by import By
 from utilites.logger import Logger
 
 
-class BaseClassForProducts(Base):
-
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.driver = driver
-
+class UniversalClassForProducts(Base):
     # base_locators
-    search_input = (By.XPATH, "//input[@name='gq']")
-    search_button = (By.XPATH, "//button[@class='button button_light mr0']")
-    add_to_cart_button = (By.XPATH, "//button[@class='button button_red add2cart']")
-    add_to_cart_button_enable = (By.XPATH, "//button[@class='button button_red add2cart button_light']")
-    product_name_locator = (By.XPATH, "//div[@class='item__name']")
-    quantity_product_increment = (By.XPATH, "//button[@class='input__incrementer']")
+    SEARCH_INPUT = (By.XPATH, "//input[@name='gq']")
+    SEARCH_BUTTON = (By.XPATH, "//button[@class='button button_light mr0']")
+    ADD_TO_CART_BUTTON = (By.XPATH, "//button[@class='button button_red add2cart']")
+    ADD_TO_CART_BUTTON_ENABLE = (By.XPATH, "//button[@class='button button_red add2cart button_light']")
+    PRODUCT_NAME_LOCATOR = (By.XPATH, "//div[@class='item__name']")
+    QUANTITY_PRODUCT_INCREMENT = (By.XPATH, "//button[@class='input__incrementer']")
 
     # getters
     @property
     def get_search_input(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.search_input))
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.SEARCH_INPUT))
 
     @property
     def get_search_button(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.search_button))
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.SEARCH_BUTTON))
 
     @property
     def get_add_to_cart_button(self):
-        return WebDriverWait(self.driver, 2).until(EC.element_to_be_clickable(self.add_to_cart_button))
+        return WebDriverWait(self.driver, 2).until(EC.element_to_be_clickable(self.ADD_TO_CART_BUTTON))
 
     @property
     def get_add_to_cart_button_enable(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.add_to_cart_button_enable))
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ADD_TO_CART_BUTTON_ENABLE))
 
     @property
     def get_some_add_to_cart_button(self):
-        return self.driver.find_elements(*self.add_to_cart_button)
+        return self.driver.find_elements(*self.ADD_TO_CART_BUTTON)
 
     @property
     def get_some_product_names(self):
-        return self.driver.find_elements(*self.product_name_locator)
+        return self.driver.find_elements(*self.PRODUCT_NAME_LOCATOR)
 
     @property
     def get_quantity_product_increment(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.quantity_product_increment))
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.QUANTITY_PRODUCT_INCREMENT))
 
     # actions
     def input_product(self, product):
@@ -67,11 +62,11 @@ class BaseClassForProducts(Base):
         print('Нажатие добавления товара в корзину')
 
     # methods
-    def add_product_to_cart(self, multiple=False,quantity=1):
+    def add_product_to_cart(self, multiple=False, quantity=1):
         """Метод для добавления товаров в корзину,
         параеметр multiple для множественного добавления в корзину"""
         Logger.add_start_step(method='add_product_to_cart')
-        for x in range(quantity-1):
+        for x in range(quantity - 1):
             self.click_get_quantity_product_increment()
         if multiple:
             try:
@@ -87,4 +82,5 @@ class BaseClassForProducts(Base):
         Logger.add_end_step(url=self.driver.current_url, method='add_product_to_cart')
 
     def parse_product_names(self):
+        """Метод возвращает список названий товаров на странице меню"""
         return self.get_texts_from_elements(self.get_some_product_names)

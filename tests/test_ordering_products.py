@@ -1,7 +1,7 @@
 from pages.main_page import MainPage
 from pages.login_page import LoginPage
 from pages.profile_page import ProfilePage
-from pages.universal_page_for_products import BaseClassForProducts
+from pages.universal_page_for_products import UniversalClassForProducts
 from pages.cart_page import CartPage
 from utilites.config import URL
 
@@ -18,7 +18,7 @@ def test_check_1_product(browser, remove_cart):
     select_product = ProfilePage(browser)
     select_product.product_selection('Корпусные и установочные изделия', 'Ребристые радиаторы')
 
-    product = BaseClassForProducts(browser)
+    product = UniversalClassForProducts(browser)
     name_product = 'HS 107-100, Радиатор 100х32х17 мм, 13 дюйм*градус/Вт'
     product.input_product(name_product)
     product.click_search_button()
@@ -37,7 +37,7 @@ def test_check_2_products(browser, remove_cart):
     select_product_1 = ProfilePage(browser)
     select_product_1.product_selection('Корпусные и установочные изделия', 'Ребристые радиаторы')
 
-    product_1 = BaseClassForProducts(browser)
+    product_1 = UniversalClassForProducts(browser)
     name_product_1 = 'HS 107-100, Радиатор 100х32х17 мм, 13 дюйм*градус/Вт'
     product_1.input_product(name_product_1)
     product_1.click_search_button()
@@ -46,7 +46,7 @@ def test_check_2_products(browser, remove_cart):
     select_product_2 = ProfilePage(browser)
     select_product_2.product_selection('Оптоэлектроника', 'Светодиоды круглые')
 
-    product_2 = BaseClassForProducts(browser)
+    product_2 = UniversalClassForProducts(browser)
     name_product_2 = 'GNL-3012ED, Светодиод оранжевый 60° d=3мм 8мКд 635нМ (Orange)'
     product_2.input_product(name_product_2)
     product_2.click_search_button()
@@ -63,7 +63,7 @@ def test_check_20_products(browser, remove_cart):
 
     select_products = ProfilePage(browser)
     select_products.product_selection('Электротехника', 'Герконы')
-    products = BaseClassForProducts(browser)
+    products = UniversalClassForProducts(browser)
     products.add_product_to_cart(multiple=True)
     name_products = products.parse_product_names()
     products.click_cart_button()

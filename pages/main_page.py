@@ -6,17 +6,13 @@ from utilites.logger import Logger
 
 
 class MainPage(Base):
-
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.driver = driver
     # locators
-    button_for_login = (By.XPATH,"//a[@id='logonlink']")
+    BUTTON_FOR_LOGIN = (By.XPATH, "//a[@id='logonlink']")
 
     # getters
     @property
     def get_auth_button(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.button_for_login))
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.BUTTON_FOR_LOGIN))
 
     # actions
     def click_auth_button(self):
@@ -25,5 +21,3 @@ class MainPage(Base):
         self.get_auth_button.click()
         print('Клик по кнопке войти')
         Logger.add_end_step(url=self.driver.current_url, method='click_auth_button')
-
-

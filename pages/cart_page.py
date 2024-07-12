@@ -7,39 +7,34 @@ from utilites.logger import Logger
 
 
 class CartPage(Base):
-
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.driver = driver
-
     # locators
-    submit_button_locator = (By.XPATH, "//button[@class='button button_red button_big button_w100 not-print']")
-    products_locator = (By.XPATH, '//a[@class="link name"]')
-    accept_button_yes = (By.XPATH, "//button[@id='fancyConfirm_ok']")
-    accept_button_no = (By.XPATH, "//button[@id='fancyConfirm_cancel']")
-    empty_cart_locator = (By.XPATH, "//div[@id='cart_empty']/h3")
+    SUBMIT_BUTTON_LOCATOR = (By.XPATH, "//button[@class='button button_red button_big button_w100 not-print']")
+    PRODUCTS_LOCATOR = (By.XPATH, '//a[@class="link name"]')
+    ACCEPT_BUTTON_YES = (By.XPATH, "//button[@id='fancyConfirm_ok']")
+    ACCEPT_BUTTON_NO = (By.XPATH, "//button[@id='fancyConfirm_cancel']")
+    EMPTY_CART_LOCATOR = (By.XPATH, "//div[@id='cart_empty']/h3")
 
     # getters
     @property
     def get_submit_button_locator(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.submit_button_locator))
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.SUBMIT_BUTTON_LOCATOR))
 
     @property
     def get_products_locator(self):
         self.driver.implicitly_wait(2)
-        return self.driver.find_elements(*self.products_locator)
+        return self.driver.find_elements(*self.PRODUCTS_LOCATOR)
 
     @property
     def get_accept_button_yes(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.accept_button_yes))
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ACCEPT_BUTTON_YES))
 
     @property
     def get_accept_button_no(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.accept_button_no))
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.ACCEPT_BUTTON_NO))
 
     @property
     def get_empty_cart_locator(self):
-        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.empty_cart_locator))
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.EMPTY_CART_LOCATOR))
 
     # actions
     def click_submit_button(self):
@@ -66,7 +61,6 @@ class CartPage(Base):
         self.click_submit_button()
         self.assert_url('https://www.chipdip.ru/order/form?from=cart')
 
-
     def clear_cart(self):
         """Метод для очистки корзины"""
         Logger.add_start_step(method='clear_cart')
@@ -74,7 +68,7 @@ class CartPage(Base):
             remove_button = self.find_element_by_text('Удалить выбранные')
             remove_button.click()
             self.click_accept_button_yes()
-            self.assert_word(self.get_empty_cart_locator,'Сейчас в корзине нет товаров')
+            self.assert_word(self.get_empty_cart_locator, 'Сейчас в корзине нет товаров')
             print('Корзина очищена')
         except selenium.common.exceptions.TimeoutException:
             print('Корзина пустая, товары не были добавлены')
