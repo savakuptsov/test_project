@@ -3,6 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from utilites.logger import Logger
+import allure
 
 
 class ProfilePage(Base):
@@ -45,15 +46,17 @@ class ProfilePage(Base):
 
     def product_selection(self, chapter='Блоки и элементы питания', subsection='Аккумуляторы Li (литиевые)'):
         """Метод для выбора подраздела товаров, принимает название раздела и подраздела"""
-        Logger.add_start_step(method='product_selection')
-        self.click_get_catalog_button()
-        self.hover_chapter(chapter)
-        self.click_subsection(subsection)
-        Logger.add_end_step(url=self.driver.current_url, method='product_selection')
+        with allure.step("click_auth_button"):
+            Logger.add_start_step(method='product_selection')
+            self.click_get_catalog_button()
+            self.hover_chapter(chapter)
+            self.click_subsection(subsection)
+            Logger.add_end_step(url=self.driver.current_url, method='product_selection')
 
     def log_out(self):
         """Метод деавторизации"""
-        Logger.add_start_step(method='product_selection')
-        self.click_exit()
-        self.assert_url('https://www.chipdip.ru/account/logon?ReturnUrl=%2faccount')
-        Logger.add_end_step(url=self.driver.current_url, method='product_selection')
+        with allure.step("click_auth_button"):
+            Logger.add_start_step(method='product_selection')
+            self.click_exit()
+            self.assert_url('https://www.chipdip.ru/account/logon?ReturnUrl=%2faccount')
+            Logger.add_end_step(url=self.driver.current_url, method='product_selection')

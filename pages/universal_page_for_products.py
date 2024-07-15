@@ -4,6 +4,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from utilites.logger import Logger
+import allure
 
 
 class UniversalClassForProducts(Base):
@@ -65,22 +66,24 @@ class UniversalClassForProducts(Base):
     def add_product_to_cart(self, multiple=False, quantity=1):
         """Метод для добавления товаров в корзину,
         параеметр multiple для множественного добавления в корзину"""
-        Logger.add_start_step(method='add_product_to_cart')
-        for x in range(quantity - 1):
-            self.click_get_quantity_product_increment()
-        if multiple:
-            try:
-                for x in self.get_some_add_to_cart_button:
-                    x.click()
-            except selenium.common.exceptions.TimeoutException:
-                print('Товар уже в корзине')
-        else:
-            try:
-                self.click_add_to_cart_button()
-            except selenium.common.exceptions.TimeoutException:
-                print('Товар уже в корзине')
-        Logger.add_end_step(url=self.driver.current_url, method='add_product_to_cart')
+        with allure.step("click_auth_button"):
+            Logger.add_start_step(method='add_product_to_cart')
+            for x in range(quantity - 1):
+                self.click_get_quantity_product_increment()
+            if multiple:
+                try:
+                    for x in self.get_some_add_to_cart_button:
+                        x.click()
+                except selenium.common.exceptions.TimeoutException:
+                    print('Товар уже в корзине')
+            else:
+                try:
+                    self.click_add_to_cart_button()
+                except selenium.common.exceptions.TimeoutException:
+                    print('Товар уже в корзине')
+            Logger.add_end_step(url=self.driver.current_url, method='add_product_to_cart')
 
     def parse_product_names(self):
         """Метод возвращает список названий товаров на странице меню"""
-        return self.get_texts_from_elements(self.get_some_product_names)
+        with allure.step("click_auth_button"):
+            return self.get_texts_from_elements(self.get_some_product_names)

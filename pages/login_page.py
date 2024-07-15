@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from utilites.config import LOGIN,PASSWORD
 from utilites.logger import Logger
+import allure
 
 
 class LoginPage(Base):
@@ -54,8 +55,9 @@ class LoginPage(Base):
 
     def auth(self,email=LOGIN,password=PASSWORD):
         """Метод авторизации пользователя"""
-        Logger.add_start_step(method='auth')
-        self.input_email(email)
-        self.input_pass(password)
-        self.click_login_button()
-        Logger.add_end_step(url=self.driver.current_url, method='auth')
+        with allure.step("click_auth_button"):
+            Logger.add_start_step(method='auth')
+            self.input_email(email)
+            self.input_pass(password)
+            self.click_login_button()
+            Logger.add_end_step(url=self.driver.current_url, method='auth')
