@@ -66,7 +66,7 @@ class UniversalClassForProducts(Base):
     def add_product_to_cart(self, multiple=False, quantity=1):
         """Метод для добавления товаров в корзину,
         параеметр multiple для множественного добавления в корзину"""
-        with allure.step("click_auth_button"):
+        with allure.step("add_product_to_cart"):
             Logger.add_start_step(method='add_product_to_cart')
             for x in range(quantity - 1):
                 self.click_get_quantity_product_increment()
@@ -85,5 +85,5 @@ class UniversalClassForProducts(Base):
 
     def parse_product_names(self):
         """Метод возвращает список названий товаров на странице меню"""
-        with allure.step("click_auth_button"):
+        with allure.step("parse_product_names"):
             return self.get_texts_from_elements(self.get_some_product_names)

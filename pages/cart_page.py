@@ -54,7 +54,7 @@ class CartPage(Base):
 
     def cart_submit(self, *args):
         """Метод для проверки корзины и подтверждения"""
-        with allure.step("click_auth_button"):
+        with allure.step("cart_submit"):
             Logger.add_start_step(method='auth')
             product_texts = self.get_texts_from_elements(self.get_products_locator)
             for arg in args:
@@ -65,7 +65,7 @@ class CartPage(Base):
 
     def clear_cart(self):
         """Метод для очистки корзины"""
-        with allure.step("click_auth_button"):
+        with allure.step("clear_cart"):
             Logger.add_start_step(method='clear_cart')
             try:
                 remove_button = self.find_element_by_text('Удалить выбранные')

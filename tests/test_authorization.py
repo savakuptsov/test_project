@@ -1,5 +1,4 @@
 from pages.main_page import MainPage
-import allure
 from pages.login_page import LoginPage
 from pages.profile_page import ProfilePage
 from utilites.config import URL

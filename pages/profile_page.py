@@ -46,7 +46,7 @@ class ProfilePage(Base):
 
     def product_selection(self, chapter='Блоки и элементы питания', subsection='Аккумуляторы Li (литиевые)'):
         """Метод для выбора подраздела товаров, принимает название раздела и подраздела"""
-        with allure.step("click_auth_button"):
+        with allure.step("product_selection"):
             Logger.add_start_step(method='product_selection')
             self.click_get_catalog_button()
             self.hover_chapter(chapter)
@@ -55,7 +55,7 @@ class ProfilePage(Base):
 
     def log_out(self):
         """Метод деавторизации"""
-        with allure.step("click_auth_button"):
+        with allure.step("log_out"):
             Logger.add_start_step(method='product_selection')
             self.click_exit()
             self.assert_url('https://www.chipdip.ru/account/logon?ReturnUrl=%2faccount')

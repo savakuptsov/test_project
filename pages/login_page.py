@@ -54,8 +54,8 @@ class LoginPage(Base):
     # methods
 
     def auth(self,email=LOGIN,password=PASSWORD):
-        """Метод авторизации пользователя"""
-        with allure.step("click_auth_button"):
+        """auth"""
+        with allure.step("auth"):
             Logger.add_start_step(method='auth')
             self.input_email(email)
             self.input_pass(password)
